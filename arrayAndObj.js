@@ -41,14 +41,41 @@ function removeProduct(products , productId){
     console.log(`Product with id ${productId} removed.`);
 }
 
-function gerInventoryValue(products){
+function getInventoryValue(products){
+   return products.reduce((total , {price , quantity}) => total + price * quantity , 0)
+   
+}
+
+function updatedQuantity(products ,id , newQuantity){
+    const product = products.find((product) => product.id === id)
+    if (!product){
+        console.log("not found ID Product");
+        return;
+    }
+    product.quantity = newQuantity;
     
 }
 
-removeProduct(products , 1)
-removeProduct(products , 3)
+function groupProductsByCategory(products){
+    return products.reduce((groups , product) => {
+        let {category} = product
+        if (!groups[category]){
+            groups[category] = []
+        }
+        groups[category].push(product)
+        return groups
+    }, {})
+}
+
+// removeProduct(products , 1)
+// removeProduct(products , 3)
+updatedQuantity(products, 2, 20)
+console.log(groupProductsByCategory(products));
 
 // console.log(updated);
 // console.log(addProduct(products ,{ id: 4, name: "Keyboard", category: "Electronics", quantity: 15, price: 700 }));
-console.log(getProduct());
+// console.log(getProduct());
+// console.log(getInventoryValue(products)); 
+
+
 
